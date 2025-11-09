@@ -1,0 +1,8 @@
+{
+  "session_id": "e077ab0c-81e2-4014-9fa8-e3bff51936b0",
+  "prompts": [
+    "Immediate Wins (1-2 days work):\n\nConsolidate CTAs: Pick \"Get Free Analysis\" as primary, remove duplicates\nFix credibility: Add at least 3 client logos or remove the \"trusted by X\" claim\nConsistent stats: Decide if it's 250+ or 500+ and stick with it\nAdd micro-interactions: Button hovers, card shadows on hover\nImprove FAQ: Open first 3 questions by default",
+    "[plugin:vite:react-babel] /Users/hadi.rickit/dev/9line/src/WebAgencyLanding.tsx: Unexpected token, expected \"}\" (1277:43)\n  1280 |                 <span className=\"font-light pr-4\">How does the subscription model save money vs. traditional rebuilds?</span>\n\n/Users/hadi.rickit/dev/9line/src/WebAgencyLanding.tsx:1277:43\n\n1275|              <div className=\"border border-slate-200 bg-white overflow-hidden\">\n1276|                <button\n1277|                  onClick={() => toggleFaq(7))\n   |                                             ^\n1278|                  className=\"w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors\"\n1279|                >",
+    "change the arrangement of the sections to the following \n\nHero \u2192 Problem (Why Fail) \u2192 Solution (How We Fix) \u2192 Intelligence Platform \u2192 Dashboard/Proof \u2192 Comparison \u2192 Pricing \u2192 FAQ"
+  ]
+}

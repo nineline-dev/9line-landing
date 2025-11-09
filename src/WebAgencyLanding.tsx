@@ -14,7 +14,23 @@ function WebAgencyLanding() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0, 1, 2]));
+
+  const isFaqOpen = (faqIndex: number) => {
+    return openFaqs.has(faqIndex);
+  };
+
+  const toggleFaq = (faqIndex: number) => {
+    setOpenFaqs(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(faqIndex)) {
+        newSet.delete(faqIndex);
+      } else {
+        newSet.add(faqIndex);
+      }
+      return newSet;
+    });
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -95,7 +111,7 @@ function WebAgencyLanding() {
             </button>
             <button
               onClick={() => handleCTAClick('Get Free Analysis', 'navigation')}
-              className="px-6 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 transition-colors"
+              className="px-6 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 transition-all duration-300 hover:scale-105 hover:shadow-md"
               aria-label="Get free website analysis and intelligence report"
             >
               Get Free Analysis →
@@ -156,7 +172,7 @@ function WebAgencyLanding() {
       <section className="pt-40 pb-32 px-8 hero-section" role="banner" aria-labelledby="hero-heading">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 border border-slate-200 rounded-full px-4 py-1.5 mb-8 text-xs text-slate-600 font-light">
-            AI-powered Fortune 500 insights · Trusted by 250+ SME business owners
+            AI-powered Fortune 500 insights · Trusted by 500+ SME business owners
           </div>
 
           <h1 id="hero-heading" className="text-6xl md:text-7xl font-light mb-8 leading-tight tracking-tight">
@@ -179,11 +195,11 @@ function WebAgencyLanding() {
             subtitleComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
             <button
-              onClick={() => handleCTAClick('GET FREE ANALYSIS', 'hero')}
-              className="px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-colors text-sm font-medium tracking-wide"
+              onClick={() => handleCTAClick('Get Free Analysis', 'hero')}
+              className="px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105 hover:shadow-md"
               aria-label="Get free website analysis and intelligence report"
             >
-              GET FREE ANALYSIS
+              Get Free Analysis
             </button>
           </div>
 
@@ -197,6 +213,28 @@ function WebAgencyLanding() {
 
       <section className="py-16 px-8 border-y border-slate-200">
         <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-sm text-slate-500 font-light mb-8">Trusted by 500+ businesses</p>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center opacity-60 hover:opacity-80 transition-opacity duration-300">
+              {/* Placeholder client logos - replace with actual client logos */}
+              <div className="h-12 bg-slate-200 rounded flex items-center justify-center">
+                <span className="text-xs text-slate-400 font-light">Client Logo</span>
+              </div>
+              <div className="h-12 bg-slate-200 rounded flex items-center justify-center">
+                <span className="text-xs text-slate-400 font-light">Client Logo</span>
+              </div>
+              <div className="h-12 bg-slate-200 rounded flex items-center justify-center">
+                <span className="text-xs text-slate-400 font-light">Client Logo</span>
+              </div>
+              <div className="h-12 bg-slate-200 rounded flex items-center justify-center">
+                <span className="text-xs text-slate-400 font-light">Client Logo</span>
+              </div>
+              <div className="h-12 bg-slate-200 rounded flex items-center justify-center">
+                <span className="text-xs text-slate-400 font-light">Client Logo</span>
+              </div>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-4xl font-light text-slate-900 mb-1">+167%</div>
@@ -262,10 +300,10 @@ function WebAgencyLanding() {
 
           <div className="text-center">
             <button
-              onClick={() => handleCTAClick('GET FREE ANALYSIS', 'why_websites_fail')}
-              className="px-8 py-4 bg-white text-slate-900 hover:bg-slate-100 transition-colors text-sm font-medium tracking-wide"
+              onClick={() => handleCTAClick('Get Free Analysis', 'why_websites_fail')}
+              className="px-8 py-4 bg-white text-slate-900 hover:bg-slate-100 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105 hover:shadow-md"
             >
-              GET FREE ANALYSIS
+              Get Free Analysis
             </button>
           </div>
         </div>
@@ -279,25 +317,25 @@ function WebAgencyLanding() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-24">
-            <div className="border border-slate-200 bg-white p-8">
+            <div className="border border-slate-200 bg-white p-8 hover:shadow-md transition-all duration-300 hover:border-slate-300">
               <Eye className="w-8 h-8 text-slate-900 mb-6" strokeWidth={1.5} />
               <h3 className="text-2xl font-light mb-3">AI Monitor</h3>
               <p className="text-slate-600 font-light leading-relaxed">Track competitors and market shifts automatically.</p>
             </div>
 
-            <div className="border border-slate-200 bg-white p-8">
+            <div className="border border-slate-200 bg-white p-8 hover:shadow-md transition-all duration-300 hover:border-slate-300">
               <Shield className="w-8 h-8 text-slate-900 mb-6" strokeWidth={1.5} />
               <h3 className="text-2xl font-light mb-3">Smart Audit</h3>
               <p className="text-slate-600 font-light leading-relaxed">AI identifies what needs fixing for better performance.</p>
             </div>
 
-            <div className="border border-slate-200 bg-white p-8">
+            <div className="border border-slate-200 bg-white p-8 hover:shadow-md transition-all duration-300 hover:border-slate-300">
               <Code className="w-8 h-8 text-slate-900 mb-6" strokeWidth={1.5} />
               <h3 className="text-2xl font-light mb-3">AI Evolve</h3>
               <p className="text-slate-600 font-light leading-relaxed">Continuous improvements that compound results.</p>
             </div>
 
-            <div className="border border-slate-200 bg-white p-8">
+            <div className="border border-slate-200 bg-white p-8 hover:shadow-md transition-all duration-300 hover:border-slate-300">
               <Smartphone className="w-8 h-8 text-slate-900 mb-6" strokeWidth={1.5} />
               <h3 className="text-2xl font-light mb-3">AI Deploy</h3>
               <p className="text-slate-600 font-light leading-relaxed">Always current with latest technology.</p>
@@ -313,7 +351,7 @@ function WebAgencyLanding() {
             <p className="text-slate-600 font-light">Track your competitive position in real-time</p>
           </div>
 
-          <div className="border-2 border-slate-300 bg-white">
+          <div className="border-2 border-slate-300 bg-white hover:shadow-lg transition-all duration-300">
             <div className="border-b border-slate-200 px-8 py-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -412,7 +450,7 @@ function WebAgencyLanding() {
               <p className="text-slate-600 font-light">Your position vs. competitors across key metrics</p>
             </div>
 
-            <div className="border border-slate-200 bg-white p-10 overflow-x-auto">
+            <div className="border border-slate-200 bg-white p-10 overflow-x-auto hover:shadow-md transition-all duration-300">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-slate-200">
@@ -475,9 +513,9 @@ function WebAgencyLanding() {
           <div className="text-center mt-12">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-colors text-sm font-medium tracking-wide"
+              className="px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105 hover:shadow-md"
             >
-              SEE YOUR DASHBOARD
+              Get Free Analysis
             </button>
           </div>
         </div>
@@ -504,7 +542,7 @@ function WebAgencyLanding() {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <div className="flex gap-8 pb-4">
-                <div className="flex-shrink-0 w-96 snap-start border border-slate-200 bg-white p-10">
+                <div className="flex-shrink-0 w-96 snap-start border border-slate-200 bg-white p-10 hover:shadow-lg transition-all duration-300 hover:border-slate-300">
                   <p className="text-slate-600 font-light mb-8 leading-relaxed italic">
                     "Their AI-powered competitive intelligence showed exactly where we were losing to competitors. The smart automation handles everything while I focus on my business. 80% of our leads come from our AI-optimized site."
                   </p>
@@ -514,7 +552,7 @@ function WebAgencyLanding() {
                   </div>
                 </div>
 
-                <div className="flex-shrink-0 w-96 snap-start border border-slate-200 bg-white p-10">
+                <div className="flex-shrink-0 w-96 snap-start border border-slate-200 bg-white p-10 hover:shadow-lg transition-all duration-300 hover:border-slate-300">
                   <p className="text-slate-600 font-light mb-8 leading-relaxed italic">
                     "The AI-driven monthly intelligence reports show exactly how we stack against big dental chains. Machine learning optimization helped us outrank them consistently. Google sends us 15-20 qualified patients weekly. Best business investment ever."
                   </p>
@@ -524,7 +562,7 @@ function WebAgencyLanding() {
                   </div>
                 </div>
 
-                <div className="flex-shrink-0 w-96 snap-start border border-slate-200 bg-white p-10">
+                <div className="flex-shrink-0 w-96 snap-start border border-slate-200 bg-white p-10 hover:shadow-lg transition-all duration-300 hover:border-slate-300">
                   <p className="text-slate-600 font-light mb-8 leading-relaxed italic">
                     "While competitors waste money on WordPress agencies and Wix consultants, I get AI-powered enterprise intelligence at a fraction of the cost. Smart automation consistently outranks companies spending 10x more. It's not even close."
                   </p>
@@ -612,10 +650,10 @@ function WebAgencyLanding() {
               Stop the expensive rebuild cycle. Establish a long-term relationship where we continuously improve your digital presence while you focus on running your business.
             </p>
             <button
-              onClick={() => handleCTAClick('START PARTNERSHIP', 'partnership_value')}
-              className="px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-colors text-sm font-medium tracking-wide"
+              onClick={() => handleCTAClick('Get Free Analysis', 'partnership_value')}
+              className="px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105 hover:shadow-md"
             >
-              START PARTNERSHIP
+              Get Free Analysis
             </button>
           </div>
         </div>
@@ -681,10 +719,10 @@ function WebAgencyLanding() {
               Stop wasting time and money on DIY platforms that don't deliver results. Get professional intelligence and optimization that actually moves the needle.
             </p>
             <button
-              onClick={() => handleCTAClick('GET FREE ANALYSIS', 'competitive_comparison')}
-              className="px-8 py-4 bg-white text-slate-900 hover:bg-slate-100 transition-colors text-sm font-medium tracking-wide"
+              onClick={() => handleCTAClick('Get Free Analysis', 'competitive_comparison')}
+              className="px-8 py-4 bg-white text-slate-900 hover:bg-slate-100 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105 hover:shadow-md"
             >
-              GET FREE ANALYSIS
+              Get Free Analysis
             </button>
           </div>
         </div>
@@ -731,7 +769,7 @@ function WebAgencyLanding() {
           {/* Mobile Layout - Stacked Cards */}
           <div className="lg:hidden space-y-6 mt-4">
             <div className="mx-auto max-w-sm">
-              <div className="p-8 border border-slate-200 rounded-lg">
+              <div className="p-8 border border-slate-200 rounded-lg hover:shadow-lg hover:border-slate-300 transition-all duration-300">
                 <div className="mb-8">
                   <h3 className="text-sm font-medium tracking-wider mb-2">WEBSITE ESSENTIALS</h3>
                   <p className="text-xs text-slate-500 font-light mb-4">Starting at · Professional website · Mobile-first design</p>
@@ -793,7 +831,7 @@ function WebAgencyLanding() {
             </div>
 
             <div className="mx-auto max-w-sm mt-4">
-              <div className="p-8 border-2 border-slate-900 rounded-lg relative">
+              <div className="p-8 border-2 border-slate-900 rounded-lg relative hover:shadow-xl transition-all duration-300">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-4 py-1 text-xs font-medium tracking-wider">
                   MOST POPULAR
                 </div>
@@ -862,7 +900,7 @@ function WebAgencyLanding() {
             </div>
 
             <div className="mx-auto max-w-sm">
-              <div className="p-8 border border-slate-200 rounded-lg">
+              <div className="p-8 border border-slate-200 rounded-lg hover:shadow-lg hover:border-slate-300 transition-all duration-300">
                 <div className="mb-8">
                   <h3 className="text-sm font-medium tracking-wider mb-2">MARKET DOMINATOR</h3>
                   <p className="text-xs text-slate-500 font-light mb-4">Full intelligence · Advanced optimization</p>
@@ -932,7 +970,7 @@ function WebAgencyLanding() {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <div className="flex gap-8 pb-4">
-                <div className="flex-shrink-0 w-80 snap-start p-10 border border-slate-200">
+                <div className="flex-shrink-0 w-80 snap-start p-10 border border-slate-200 hover:shadow-md transition-all duration-300 hover:border-slate-300">
                   <div className="mb-12">
                     <h3 className="text-sm font-medium tracking-wider mb-2">WEBSITE ESSENTIALS</h3>
                     <p className="text-xs text-slate-500 font-light mb-4">Starting at · Professional website · Mobile-first design</p>
@@ -992,7 +1030,7 @@ function WebAgencyLanding() {
                   </button>
                 </div>
 
-                <div className="flex-shrink-0 w-80 md:w-auto snap-start p-10 border-2 border-slate-900 relative mt-4">
+                <div className="flex-shrink-0 w-80 md:w-auto snap-start p-10 border-2 border-slate-900 relative mt-4 hover:shadow-xl transition-all duration-300">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-4 py-1 text-xs font-medium tracking-wider">
                     MOST POPULAR
                   </div>
@@ -1059,7 +1097,7 @@ function WebAgencyLanding() {
                   </button>
                 </div>
 
-                <div className="flex-shrink-0 w-80 md:w-auto snap-start p-10 border border-slate-200">
+                <div className="flex-shrink-0 w-80 md:w-auto snap-start p-10 border border-slate-200 hover:shadow-md transition-all duration-300 hover:border-slate-300">
                   <div className="mb-12">
                     <h3 className="text-sm font-medium tracking-wider mb-2">MARKET DOMINATOR</h3>
                     <p className="text-xs text-slate-500 font-light mb-4">Full intelligence · Advanced optimization</p>
@@ -1146,13 +1184,13 @@ function WebAgencyLanding() {
           <div className="space-y-3">
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 0 ? null : 0)}
+                onClick={() => toggleFaq(0)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">How is this different from hiring an SEO agency?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 0 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(0) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 0 && (
+              {isFaqOpen(0) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   Agencies charge $5K-15K/month and often disappear after delivering a report. We provide AI-powered enterprise intelligence for 1/5th the cost, plus smart automation implements everything. You get the strategy AND the execution, continuously optimized by AI with website continuous optimization.
                 </div>
@@ -1161,13 +1199,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 1 ? null : 1)}
+                onClick={() => toggleFaq(1)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">How do you justify the ROI at these price points?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 1 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(1) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 1 && (
+              {isFaqOpen(1) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   One new customer per month pays for the entire service. Our average client sees 67% increase in conversions. If your average customer value is $2,000+, the math works from day one. Plus you get continuous website optimization vs. one-time projects.
                 </div>
@@ -1176,13 +1214,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 2 ? null : 2)}
+                onClick={() => toggleFaq(2)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">What makes your intelligence platform unique?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 2 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(2) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 2 && (
+              {isFaqOpen(2) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   AI-powered industry-specific intelligence, not generic reports. Machine learning monitors what actually works in YOUR market, implements based on real performance data, and continuously optimizes. No one else combines deep AI intelligence with smart automated implementation.
                 </div>
@@ -1191,13 +1229,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 3 ? null : 3)}
+                onClick={() => toggleFaq(3)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">What if I'm already ranking well?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 3 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(3) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 3 && (
+              {isFaqOpen(3) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   Perfect. We'll keep you there and widen the gap. Competitors are always trying to catch up. Our monthly improvements ensure you stay ahead and keep gaining ground.
                 </div>
@@ -1206,13 +1244,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 4 ? null : 4)}
+                onClick={() => toggleFaq(4)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">I'm not technical. Do I need to be involved?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 4 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(4) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 4 && (
+              {isFaqOpen(4) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   Zero technical involvement required. You run your business, we handle the intelligence and implementation. Monthly reports show exactly how you're performing vs. competitors in plain English. You'll understand your market position without needing technical knowledge.
                 </div>
@@ -1221,13 +1259,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 5 ? null : 5)}
+                onClick={() => toggleFaq(5)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">Why continuous optimization vs. one-time projects?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 5 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(5) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 5 && (
+              {isFaqOpen(5) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   Markets change constantly. Google updates algorithms, competitors launch new strategies, customer behavior shifts. One-time projects become outdated quickly. AI-powered continuous intelligence ensures you stay ahead of every market change and competitor move.
                 </div>
@@ -1236,13 +1274,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 7 ? null : 7)}
+                onClick={() => toggleFaq(7)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">How does the subscription model save money vs. traditional rebuilds?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 7 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(7) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 7 && (
+              {isFaqOpen(7) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   Traditional agencies charge $15K-50K+ for complete rebuilds every 2-3 years. Our subscription starts at just $200/month for professional websites, with SEO and competitive intelligence available from $500/month. Instead of expensive disruptions, you get predictable monthly investment with ongoing improvements and no surprise rebuild costs.
                 </div>
@@ -1251,13 +1289,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 8 ? null : 8)}
+                onClick={() => toggleFaq(8)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">How do you keep websites updated with the latest technology?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 8 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(8) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 8 && (
+              {isFaqOpen(8) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   Our AI automatically monitors and implements the latest frameworks, security updates, and performance optimizations. We rebuild your site's foundation with cutting-edge technology without business disruption. Your site always uses mobile-first responsive design and the fastest available tech stack—no expensive migration projects needed.
                 </div>
@@ -1266,13 +1304,13 @@ function WebAgencyLanding() {
 
             <div className="border border-slate-200 bg-white overflow-hidden">
               <button
-                onClick={() => setOpenFaq(openFaq === 9 ? null : 9)}
+                onClick={() => toggleFaq(9)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">Is SEO optimization included, or do I need to pay extra?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 9 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(9) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 9 && (
+              {isFaqOpen(9) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   SEO and competitive intelligence are included in our Growth Intelligence ($500/month) and Market Dominator ($700/month) plans. Our AI continuously monitors search rankings and automatically adjusts meta tags, content structure, and technical SEO based on what's working in your market. You get ongoing SEO optimization without paying separate agencies or monthly SEO fees.
                 </div>
@@ -1281,13 +1319,13 @@ function WebAgencyLanding() {
 
             <div className="border-b border-slate-200">
               <button
-                onClick={() => setOpenFaq(openFaq === 10 ? null : 10)}
+                onClick={() => toggleFaq(10)}
                 className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
               >
                 <span className="font-light pr-4">Why not just use WordPress, Wix, or Squarespace?</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${openFaq === 10 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${isFaqOpen(10) ? 'rotate-180' : ''}`} />
               </button>
-              {openFaq === 10 && (
+              {isFaqOpen(10) && (
                 <div className="px-8 pb-6 text-slate-600 font-light leading-relaxed">
                   WordPress requires constant security updates and technical maintenance. Wix and Squarespace are slow and make YOU do all the optimization work. Our AI-powered platform handles all technical complexity while continuously monitoring and improving your market position. You get enterprise-level intelligence without the DIY headaches.
                 </div>
@@ -1324,10 +1362,10 @@ function WebAgencyLanding() {
           </p>
           <div className="flex justify-center mb-6">
             <button
-              onClick={() => handleCTAClick('GET FREE ANALYSIS', 'footer_cta')}
-              className="px-10 py-4 bg-white text-slate-900 hover:bg-slate-100 transition-colors text-sm font-medium tracking-wide"
+              onClick={() => handleCTAClick('Get Free Analysis', 'footer_cta')}
+              className="px-10 py-4 bg-white text-slate-900 hover:bg-slate-100 transition-all duration-300 text-sm font-medium tracking-wide hover:scale-105 hover:shadow-md"
             >
-              GET FREE ANALYSIS
+              Get Free Analysis
             </button>
           </div>
           <p className="text-sm text-slate-500 font-light">
