@@ -78,11 +78,11 @@
       });
     </script>
 
-    <!-- RudderStack Analytics (v3) -->
-    <script type="text/javascript">
-      !function(){var e=window.rudderanalytics=window.rudderanalytics||[];e.methods=["load","page","track","identify","alias","group","ready","reset","getAnonymousId","setAnonymousId","getUserId","getUserTraits","getGroupId","getGroupTraits","startSession","endSession"],e.factory=function(t){return function(){var a=Array.prototype.slice.call(arguments);return a.unshift(t),e.push(a),e}};for(var t=0;t<e.methods.length;t++){var a=e.methods[t];e[a]=e.factory(a)}e.load("35IPuNzsZBoYgFQAMGBhwqwAgeU","https://lineadmiyelnht.dataplane.rudderstack.com"),e.page()}();
+    <!-- RudderStack Analytics -->
+    <script>
+      rudderanalytics=window.rudderanalytics=[];for(var methods=["load","page","track","identify","alias","group","ready","reset","getAnonymousId","setAnonymousId","getUserId","getUserTraits","getGroupId","getGroupTraits","startSession","endSession"],i=0;i<methods.length;i++){var method=methods[i];rudderanalytics[method]=function(a){return function(){rudderanalytics.push([a].concat(Array.prototype.slice.call(arguments)))}}(method)}rudderanalytics.load("35IPuNzsZBoYgFQAMGBhwqwAgeU","https://lineadmiyelnht.dataplane.rudderstack.com");rudderanalytics.page();
     </script>
-    <script src="https://cdn.rudderlabs.com/v3/modern/rudder-analytics.min.js"></script>
+    <script src="https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js"></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
