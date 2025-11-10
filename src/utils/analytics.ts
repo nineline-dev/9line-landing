@@ -229,3 +229,161 @@ export const trackPricingInteractionDual = (plan: string, action: 'view' | 'clic
     });
   }
 };
+
+// ===================================================================
+// ENHANCED TRACKING - ADVANCED ANALYTICS (Added 2025-11-10)
+// ===================================================================
+
+/**
+ * Get UTM parameters from URL (attribution tracking)
+ */
+const getUTMParameters = (): Record<string, string | null> => {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get('utm_source'),
+    utm_medium: params.get('utm_medium'),
+    utm_campaign: params.get('utm_campaign'),
+    utm_content: params.get('utm_content'),
+    utm_term: params.get('utm_term'),
+  };
+};
+
+/**
+ * Get enriched context (all advanced tracking fields)
+ */
+const getEnrichedContext = (): Record<string, any> => {
+  return {
+    // Device & Browser
+    device_type: getDeviceType(),
+    screen_resolution: `${window.screen.width}x${window.screen.height}`,
+    viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+    browser_language: navigator.language,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    user_agent: navigator.userAgent,
+
+    // Page context
+    page_category: getPageCategory(),
+    page_url: window.location.href,
+    page_path: window.location.pathname,
+    page_title: document.title,
+    referrer: document.referrer,
+    referrer_domain: document.referrer ? new URL(document.referrer).hostname : null,
+
+    // Attribution
+    ...getUTMParameters(),
+
+    // Technical
+    connection_type: (navigator as any).connection?.effectiveType || 'unknown',
+    timestamp: new Date().toISOString(),
+  };
+};
+
+/**
+ * Enhanced track function with all context
+ */
+export const trackEnhanced = (eventName: string, properties?: Record<string, any>): void => {
+  const enrichedProps = {
+    ...getEnrichedContext(),
+    ...properties,
+  };
+
+  // Track in both GA4 and RudderStack
+  trackEvent(eventName, enrichedProps.category || 'engagement', enrichedProps.label);
+
+  if (isRudderStackAvailable()) {
+    window.rudderanalytics!.track(eventName, enrichedProps);
+  }
+};
+
+/**
+ * Track first-touch attribution (store in localStorage)
+ */
+export const trackFirstTouch = (): void => {
+  const FIRST_TOUCH_KEY = '9line_first_touch';
+
+  if (!localStorage.getItem(FIRST_TOUCH_KEY)) {
+    const firstTouch = {
+      ...getUTMParameters(),
+      referrer: document.referrer,
+      landing_page: window.location.href,
+      timestamp: new Date().toISOString(),
+    };
+
+    localStorage.setItem(FIRST_TOUCH_KEY, JSON.stringify(firstTouch));
+
+    if (isRudderStackAvailable()) {
+      window.rudderanalytics!.track('First Touch', firstTouch);
+    }
+  }
+};
+
+/**
+ * Track rage clicks (frustrated user behavior)
+ */
+let clickCounts: Record<string, number> = {};
+export const detectRageClicks = (element: HTMLElement): void => {
+  const elementId = element.id || element.className || 'unknown';
+  clickCounts[elementId] = (clickCounts[elementId] || 0) + 1;
+
+  if (clickCounts[elementId] >= 5) {
+    trackEnhanced('Rage Click Detected', {
+      element_id: elementId,
+      click_count: clickCounts[elementId],
+    });
+    clickCounts[elementId] = 0; // Reset
+  }
+};
+
+/**
+ * Track errors (JavaScript errors)
+ */
+export const setupErrorTracking = (): void => {
+  window.addEventListener('error', (event) => {
+    trackEnhanced('JavaScript Error', {
+      error_message: event.message,
+      error_source: event.filename,
+      error_line: event.lineno,
+      error_column: event.colno,
+    });
+  });
+
+  window.addEventListener('unhandledrejection', (event) => {
+    trackEnhanced('Promise Rejection', {
+      error_message: event.reason?.message || event.reason,
+    });
+  });
+};
+
+/**
+ * Track visibility changes (tab switching)
+ */
+let pageVisibleStart = Date.now();
+export const setupVisibilityTracking = (): void => {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      const visibleDuration = Math.floor((Date.now() - pageVisibleStart) / 1000);
+      trackEnhanced('Page Hidden', {
+        visible_duration_seconds: visibleDuration,
+      });
+    } else {
+      pageVisibleStart = Date.now();
+      trackEnhanced('Page Visible', {});
+    }
+  });
+};
+
+/**
+ * Auto-initialize enhanced tracking
+ */
+if (typeof window !== 'undefined') {
+  // Track first touch
+  trackFirstTouch();
+
+  // Setup error tracking
+  setupErrorTracking();
+
+  // Setup visibility tracking
+  setupVisibilityTracking();
+
+  console.log('[9line Analytics] Enhanced tracking initialized');
+}
